@@ -28,7 +28,8 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
+    // : RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -36,16 +37,28 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $FirstUser = User::count() === 0;
+        $role =  $FirstUser ? 'admin' : 'client';
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $FirstUser ? 'admin' : 'client',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+
+        // if($role === 'admin'){
+        //     return redirect(RouteServiceProvider::HOME);
+        // }
+        // else if($role === 'client'){
+        //     return redirect(RouteServiceProvider::CLIENT);
+        // }
+        // else{
+        //     return redirect(RouteServiceProvider::AGENT);
+        // }
     }
 }

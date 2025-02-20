@@ -18,14 +18,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('admin/adminDashboard', function () {
+        return view('admin.adminDashboard');
+    })->name('admin.adminDashboard');
+    });
+
+    Route::middleware(['role:agent'])->group(function () {
+        Route::get('agent/agentDashboard', function () {
+        return view('agent.agentDashboard');
+    })->name('agent.agentDashboard');
+    });
+
+    Route::middleware(['role:client'])->group(function () {
+        Route::get('client/clientDashboard', function () {
+        return view('client.clientDashboard');
+    })->name('client.clientDashboard');
+    });
 });
 
+    
 require __DIR__.'/auth.php';
