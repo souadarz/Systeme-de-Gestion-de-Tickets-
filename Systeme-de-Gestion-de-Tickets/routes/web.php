@@ -28,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('admin/adminDashboard', function () {
         return view('admin.adminDashboard');
     })->name('admin.adminDashboard');
+        Route::get('admin/tickets', function () {
+        return view('admin.ticket');
+    })->name('admin.tickets');
     });
 
     Route::middleware(['role:agent'])->group(function () {
