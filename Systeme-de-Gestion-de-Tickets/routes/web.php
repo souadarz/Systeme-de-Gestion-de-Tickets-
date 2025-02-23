@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,26 +26,33 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware(['role:admin'])->group(function () {
-        Route::get('admin/adminDashboard', function () {
-        return view('admin.adminDashboard');
-    })->name('admin.adminDashboard');
+        Route::get('admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
         Route::get('admin/tickets', function () {
-        return view('admin.ticket');
+        return view('admin.tickets');
     })->name('admin.tickets');
     });
 
     Route::middleware(['role:agent'])->group(function () {
-        Route::get('agent/agentDashboard', function () {
-        return view('agent.agentDashboard');
-    })->name('agent.agentDashboard');
+        Route::get('agent/dashboard', function () {
+        return view('agent.dashboard');
+    })->name('agent.dashboard');
     });
 
     Route::middleware(['role:client'])->group(function () {
-        Route::get('client/clientDashboard', function () {
-        return view('client.clientDashboard');
-    })->name('client.clientDashboard');
+        Route::get('client/dashboard', function () {
+        return view('client.dashboard');
+    })->name('client.dashboard');
+        Route::get('client.createTicket', function () {
+        return view('client.createTicket');
+    })->name('client.createTicket');
     });
 });
+
+Route::get('/admin/tickets', [TicketController::class, 'showTicket'])->name('admin.tickets');
+Route::get('/client/mesTickets', [TicketController::class, 'showTicketsClient'])->name('client.tickets');
+
 
     
 require __DIR__.'/auth.php';

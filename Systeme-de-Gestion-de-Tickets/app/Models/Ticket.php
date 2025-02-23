@@ -11,11 +11,10 @@ class Ticket extends Model
 
     protected $fillable = ['title', 'description', 'status'];
 
-    public function categorie(){
-        return $this->belongsTo(Categorie::class);
+    public function category(){
+        return $this->belongsTo(Category::class, 'categorie_id');
     }
     public function user(){
         return $this->belongsTo(User::class);
     }
-
 }
