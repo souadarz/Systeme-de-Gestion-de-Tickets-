@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'status'];
+    protected $fillable = ['title', 'description', 'status', 'categorie_id', 'user_id'];
 
     public function category(){
         return $this->belongsTo(Category::class, 'categorie_id');

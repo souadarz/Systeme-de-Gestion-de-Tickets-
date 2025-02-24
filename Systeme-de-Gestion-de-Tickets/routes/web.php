@@ -44,15 +44,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('client/dashboard', function () {
         return view('client.dashboard');
     })->name('client.dashboard');
-        Route::get('client.createTicket', function () {
-        return view('client.createTicket');
-    })->name('client.createTicket');
+    //     Route::get('client.createTicket', function () {
+    //     return view('client.createTicket');
+    // })->name('client.createTicket');
     });
 });
 
 Route::get('/admin/tickets', [TicketController::class, 'showTicket'])->name('admin.tickets');
 Route::get('/client/mesTickets', [TicketController::class, 'showTicketsClient'])->name('client.tickets');
+Route::get('/client/createTicket', [TicketController::class, 'create'])->name('create.ticket');
+Route::post('/client/createTicket', [TicketController::class, 'store'])->name('store.ticket');
 
 
-    
 require __DIR__.'/auth.php';

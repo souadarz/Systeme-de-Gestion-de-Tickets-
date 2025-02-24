@@ -28,18 +28,28 @@ class TicketController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('client/createTicket',compact('categories'));
+        return view('/client/createTicket',compact('categories'));
     }
 
     public function store(Request $request)
     {
-       
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'category_id' => ['required'],
-            'description' => ['required'],
-            'image' => ['required']
+        // dd('gggg');
+    
+        // $request->validate([
+        //     'title' => ['required', 'string', 'max:255'],
+        //     'categorie_id' => ['required'],
+        //     'description' => ['required'],
+        // ]);
+        // dd($request);
+        Ticket::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'categorie_id' => $request->category_id,
+            'user_id' => auth()->id(),
+            'status' => 'pending'
         ]);
+
+        return redirect()->route('client.tickets');
     }
     
     public function editTicket(){

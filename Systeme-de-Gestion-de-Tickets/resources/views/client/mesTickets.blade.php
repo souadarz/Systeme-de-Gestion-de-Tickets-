@@ -4,6 +4,11 @@
 
         <x-sidebar />
         <x-topNav></x-topNav>
+        <div class="flex justify-end">
+            <a href="/client/createTicket">
+                <button class ="m-4 bg-gray-900 rounded-lg px-8 py-4 text-white hover:bg-gray-500">New Ticket</button>
+            </a>
+        </div>
             <div class="bg-white rounded-lg shadow">
                 <div class="p-6">
                     <table class="min-w-full">
